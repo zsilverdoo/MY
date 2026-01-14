@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BRB F&B 모바일 제안서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 리셋 */
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5; /* 배경 회색 */
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        /* 모바일 컨테이너 (최대폭 제한으로 PC에서도 깔끔하게 보임) */
+        .mobile-container {
+            max-width: 480px; /* 스마트폰 너비와 비슷하게 제한 */
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        /* --- 헤더 --- */
+        header {
+            background-color: white;
+            padding: 20px;
+            border-bottom: 2px solid #8B0000;
+            position: relative;
+        }
+        h1 { font-size: 22px; margin: 0; font-weight: 900; letter-spacing: -1px; }
+        .subtitle { font-size: 13px; color: #666; margin-top: 5px; }
+        .vat-badge {
+            position: absolute; top: 20px; right: 20px;
+            background: #8B0000; color: white;
+            font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px;
+        }
+
+        /* --- 이미지 영역 --- */
+        .img-box {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .placeholder { color: #aaa; font-size: 12px; }
+
+        /* --- 전략 박스 (노란색) --- */
+        .strategy-box {
+            background-color: #fff8e1;
+            padding: 15px;
+            margin: 0;
+            border-bottom: 1px solid #ffe0b2;
+            text-align: center;
+        }
+        .strategy-txt { font-size: 13px; margin-bottom: 5px; }
+        .strategy-highlight { color: #d32f2f; font-weight: 900; font-size: 15px; display: block; margin-top: 5px; }
+
+        /* --- 메뉴 리스트 스타일 (카드형) --- */
+        .section-title {
+            background-color: #333; color: white;
+            padding: 10px 20px;
+            font-size: 16px; font-weight: 800;
+            margin-top: 0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .menu-list { padding: 0 20px 20px 20px; }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .menu-item:last-child { border-bottom: none; }
+
+        .menu-info { flex: 1; }
+        .m-name { font-size: 16px; font-weight: 800; display: block; margin-bottom: 4px; }
+        .m-desc { font-size: 12px; color: #888; display: block; }
+
+        .menu-price { text-align: right; }
+        .p-unit { font-size: 18px; font-weight: 900; color: #c00000; display: block; }
+        .p-ref { font-size: 11px; color: #888; margin-top: 2px; display: block; }
+        
+        /* 뱃지 */
+        .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; color: white; vertical-align: middle; margin-right: 5px; }
+        .bg-sig { background-color: #b45309; }
+        .bg-prem { background-color: #000; }
+
+        /* --- 시스템 특징 --- */
+        .system-section { padding: 30px 20px; background-color: #f9f9f9; }
+        .sys-head { font-size: 20px; font-weight: 900; text-align: center; margin-bottom: 5px; }
+        .sys-sub { font-size: 12px; color: #666; text-align: center; margin-bottom: 25px; }
+        
+        .sys-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            border-left: 5px solid #8B0000;
+        }
+        .sc-num { font-size: 14px; font-weight: 900; color: #8B0000; margin-bottom: 5px; display: block; }
+        .sc-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; display: block; }
+        .sc-desc { font-size: 13px; color: #555; margin: 0; padding-left: 15px; }
+        .sc-desc li { margin-bottom: 3px; }
+
+        /* --- 하단 고정 버튼 (전화하기) --- */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background-color: #333;
+            color: white;
+            display: flex;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            max-width: 480px; /* 모바일 컨테이너 폭에 맞춤 */
+            margin: 0 auto;
+        }
+        .footer-text {
+            flex: 1;
+            padding: 15px;
+            font-size: 12px;
+            text-align: left;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .call-btn {
+            background-color: #ffcc00;
+            color: #000;
+            font-weight: 900;
+            padding: 0 30px;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        /* 하단 버튼 공간 확보 */
+        .content-spacer { height: 80px; }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    
+    <header>
+        <h1>BRB F&B 솔트에이징</h1>
+        <div class="subtitle">B2B 파트너 사장님을 위한 제안</div>
+        <div class="vat-badge">VAT 별도</div>
+    </header>
+
+    <div class="img-box">
+        <img src="main.jpg" alt="메인고기" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'placeholder\'>메인 이미지 (main.jpg)</span>'">
+    </div>
+
+    <div class="strategy-box">
+        <div class="strategy-txt"><strong>부담 없는 시작</strong>을 응원합니다!</div>
+        <span class="strategy-highlight">"최소 주문 단위 없음 (MOQ Free)"</span>
+        <span style="font-size:12px; color:#555;">1팩도 배송 가능 / 소량 테스트 환영</span>
+    </div>
+
+    <div class="section-title">
+        <span>🐷 솔트에이징 돼지</span>
+    </div>
+    <div class="menu-list">
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name">삼겹살</span>
+                <span class="m-desc">전 업종 메인 / 회전율 안정</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">3,400원 <span style="font-size:12px; color:#333; font-weight:normal;">/200g</span></span>
+                <span class="p-ref">1kg : 17,000원</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name">목살</span>
+                <span class="m-desc">구이·정식 모두 활용</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">3,300원 <span style="font-size:12px; color:#333; font-weight:normal;">/200g</span></span>
+                <span class="p-ref">1kg : 16,500원</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name">항정살</span>
+                <span class="m-desc">객단가 상승 효자 메뉴</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">5,170원 <span style="font-size:12px; color:#333; font-weight:normal;">/200g</span></span>
+                <span class="p-ref">1kg : 25,850원</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title" style="background-color: #8B0000;">
+        <span>🐮 미국산 솔트에이징</span>
+    </div>
+    <div class="menu-list">
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name">갈비살</span>
+                <span class="m-desc">가성비 최고의 메인</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">5,670원 <span style="font-size:12px; color:#333; font-weight:normal;">/150g</span></span>
+                <span class="p-ref">1kg : 37,800원</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name">부채살</span>
+                <span class="m-desc">호불호 없는 인기 부위</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">5,100원 <span style="font-size:12px; color:#333; font-weight:normal;">/150g</span></span>
+                <span class="p-ref">1kg : 34,000원</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title" style="background-color: #b45309;">
+        <span>🔥 시그니처 / 차별화</span>
+    </div>
+    <div class="img-box" style="height: 150px;">
+        <img src="signature.jpg" alt="시그니처" onerror="this.style.display='none';">
+    </div>
+    <div class="menu-list" style="background-color: #fff9e6;">
+        <div class="menu-item" style="border-bottom: 1px solid #e6dcb8;">
+            <div class="menu-info">
+                <span class="m-name"><span class="badge bg-sig">BEST</span> 소대창</span>
+                <span class="m-desc" style="color:#b45309; font-weight:bold;">술집·구이점 마진 핵심!</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">2,300원 <span style="font-size:12px; color:#333; font-weight:normal;">/150g</span></span>
+                <span class="p-ref">1kg : 12,000원</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name">우대갈비</span>
+                <span class="m-desc">압도적 비주얼 메뉴</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">19,500원 <span style="font-size:12px; color:#333; font-weight:normal;">/500g</span></span>
+                <span class="p-ref">1kg : 39,000원</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title" style="background-color: #000;">
+        <span>👑 프리미엄 (한돈/한우)</span>
+    </div>
+    <div class="menu-list">
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name"><span class="badge bg-prem">한돈</span> 삼겹살</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">5,600원 <span style="font-size:12px; color:#333; font-weight:normal;">/200g</span></span>
+                <span class="p-ref">1kg : 28,000원</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name"><span class="badge bg-prem">한돈</span> 목살</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">5,200원 <span style="font-size:12px; color:#333; font-weight:normal;">/200g</span></span>
+                <span class="p-ref">1kg : 26,000원</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name"><span class="badge bg-prem">1+한우</span> 등심</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">16,800원 <span style="font-size:12px; color:#333; font-weight:normal;">/150g</span></span>
+                <span class="p-ref">1kg : 112,000원</span>
+            </div>
+        </div>
+         <div class="menu-item">
+            <div class="menu-info">
+                <span class="m-name"><span class="badge bg-prem">1+한우</span> 갈비살</span>
+            </div>
+            <div class="menu-price">
+                <span class="p-unit">14,235원 <span style="font-size:12px; color:#333; font-weight:normal;">/150g</span></span>
+                <span class="p-ref">1kg : 94,897원</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-section">
+        <div class="sys-head">쉬운 운영시스템</div>
+        <div class="sys-sub">브랜드 정체성 + 매출 상승 디자인 시스템</div>
+
+        <div class="sys-card">
+            <span class="sc-num">01. 이지컷팅 시스템</span>
+            <span class="sc-title">주방 인건비 300만원 절감</span>
+            <ul class="sc-desc">
+                <li>손질·칼질 필요 없음</li>
+                <li>초보 알바생도 바로 판매 가능</li>
+            </ul>
+        </div>
+
+        <div class="sys-card" style="border-left-color: #d32f2f;">
+            <span class="sc-num">02. 리스크 ZERO</span>
+            <span class="sc-title">폐기 비용 0원 / MOQ 없음</span>
+            <ul class="sc-desc">
+                <li><strong>1팩 단위 발주 가능</strong></li>
+                <li>필요한 만큼만 주문 (재고 부담 無)</li>
+            </ul>
+        </div>
+
+        <div class="sys-card" style="border-left-color: #333;">
+            <span class="sc-num">03. 브랜딩 패키지 & 디자인</span>
+            <span class="sc-title">내 매장 브랜드 상품화</span>
+            <ul class="sc-desc">
+                <li>라벨·패키징 무료 디자인 지원</li>
+                <li>메뉴판, 포스터, 배너 시안 제공</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="padding: 20px; text-align: center; color: #888; font-size: 12px; background: #eee;">
+        안내: 표기 중량은 기준이며, 매장 상황에 맞춰<br>맞춤 컷팅/중량 조절이 가능합니다.
+    </div>
+
+    <div class="content-spacer"></div>
+
+    <div class="sticky-footer">
+        <div class="footer-text">
+            <span style="display:block; font-weight:bold;">BRB F&B 상담 문의</span>
+            <span style="font-size:11px; opacity:0.8;">샘플 주문 / 단가 확인</span>
+        </div>
+        <a href="tel:01099253224" class="call-btn">
+            전화하기
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
